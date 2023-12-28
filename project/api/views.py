@@ -10,10 +10,10 @@ from django.shortcuts import redirect
 def api_overview(request):
     api_urls = {
         "List": "/task-list/",
-        "Detail-view": "/task-detail/<str:pk>",
+        "Detail-view": "/task-detail/<int:pk>",
         "Create": "/task-create/",
-        "Update": "/task-update/<str:pk>",
-        "Delete": "/task-delete/<str:pk>",
+        "Update": "/task-update/<int:pk>",
+        "Delete": "/task-delete/<int:pk>",
     }
 
     return Response(api_urls)
