@@ -48,13 +48,16 @@ function buildList(){
         for(let i in list){
 
            const row = document.createElement('div')
-           row.id='data-row-{i}'
+           row.id=`data-row-${i}`
            row.classList.add('task-wrapper','flex-wrapper')
 
            const titlediv = document.createElement('div')
            titlediv.style.flex = 7
            const span1 = document.createElement('span')
            span1.classList.add('title')
+           if (list[i].completed){
+            span1.style.textDecoration = 'line-through'
+           }
            span1.textContent = `${list[i].title}`
            titlediv.appendChild(span1)
 
@@ -79,9 +82,39 @@ function buildList(){
 
            let editBtn = document.getElementsByClassName('edit')[i]
            editBtn.addEventListener('click',function(){
-                console.log(list[i].id)
                 activeItem = list[i]
                 document.getElementById('title').value = activeItem.title
+            })
+
+            let deleteBtn = document.getElementsByClassName('delete')[i]
+            deleteBtn.addEventListener('click',function(){
+                let url = `http://127.0.0.1:8000/api/task-delete/${list[i].id}`
+                fetch(url,{
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type':'application/json',
+                        'X-CSRFToken':csrftoken,
+                    }
+                }).then(function(response){
+                    buildList()
+                })
+            })
+
+            let strikeBtn = document.getElementsByClassName('title')[i]
+            strikeBtn.addEventListener('click',function(){
+                console.log('click')
+                let url = `http://127.0.0.1:8000/api/task-update/${list[i].id}`
+                fetch(url,{
+                    method: 'PATCH',
+                    headers: {
+                        'Content-type':'application/json',
+                        'X-CSRFToken':csrftoken,
+                    },
+                    body: JSON.stringify({'title':list[i].title,
+                                            'completed':!list[i].completed})
+                }).then(function(response){
+                    buildList()
+                })
             })
         }
     })

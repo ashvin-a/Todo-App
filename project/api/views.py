@@ -19,7 +19,7 @@ def api_overview(request):
     return Response(api_urls)
 
 
-@api_view(["GET"])
+@api_view(["GET", "DELETE"])
 def tasklist(request):
     all_task = Task.objects.all().order_by('-id')
     serializer = TaskSerializer(all_task, many=True)
