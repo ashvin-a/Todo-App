@@ -120,6 +120,90 @@ function buildList(){
     })
 }
 
+// function buildList() {
+//     const element = $('#list-wrapper');
+//     element.empty();
+//     const url = 'http://127.0.0.1:8000/api/task-list/';
+
+//     $.getJSON(url, function (data) {
+//         let list = data;
+//         for (let i in list) {
+//             const row = $('<div></div>');
+//             row.attr('id', `data-row-${i}`);
+//             row.addClass('task-wrapper flex-wrapper');
+
+//             const titleDiv = $('<div></div>');
+//             titleDiv.css('flex', '7');
+
+//             const span1 = $('<span></span>');
+//             span1.addClass('title');
+//             if (list[i].completed) {
+//                 span1.css('text-decoration', 'line-through');
+//             }
+//             span1.text(`${list[i].title}`);
+//             titleDiv.append(span1);
+
+//             const buttonDiv = $('<div></div>');
+//             buttonDiv.css('flex', '1');
+
+//             const editBtn = $('<button>Edit</button>');
+//             editBtn.addClass('btn btn-sm btn-outline-info edit');
+//             buttonDiv.append(editBtn);
+
+//             const deleteDiv = $('<div></div>');
+//             deleteDiv.css('flex', '1');
+
+//             const delBtn = $('<button>-</button>');
+//             delBtn.addClass('btn btn-sm btn-outline-dark delete');
+//             deleteDiv.append(delBtn);
+
+//             row.append(titleDiv, buttonDiv, deleteDiv);
+//             element.append(row);
+
+//             $('.edit').eq(i).on('click', function () {
+//                 activeItem = list[i];
+//                 $('#title').val(activeItem.title);
+//             });
+
+//             $('.delete').eq(i).on('click', function () {
+//                 let url = `http://127.0.0.1:8000/api/task-delete/${list[i].id}`;
+//                 $.ajax({
+//                     url: url,
+//                     method: 'DELETE',
+//                     headers: {
+//                         'Content-type': 'application/json',
+//                         'X-CSRFToken': csrftoken,
+//                     },
+//                     success: function (response) {
+//                         buildList();
+//                     },
+//                 });
+//             });
+
+//             $('.title').eq(i).on('click', function () {
+//                 console.log('click');
+//                 let url = `http://127.0.0.1:8000/api/task-update/${list[i].id}`;
+//                 $.ajax({
+//                     url: url,
+//                     method: 'PATCH',
+//                     headers: {
+//                         'Content-type': 'application/json',
+//                         'X-CSRFToken': csrftoken,
+//                     },
+//                     data: JSON.stringify({
+//                         title: list[i].title,
+//                         completed: !list[i].completed,
+//                     }),
+//                     success: function (response) {
+//                         buildList();
+//                     },
+//                 });
+//             });
+//         }
+//     });
+// }
+
+
 form.addEventListener('submit',function(e){
     e.preventDefault();
     let url = 'http://127.0.0.1:8000/api/task-create/'
